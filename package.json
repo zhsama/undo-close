@@ -1,11 +1,11 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
-  "version": "0.3.4",
-  "description": "chrome extension boilerplate",
+  "name": "undo-close",
+  "version": "0.0.1",
+  "description": "chrome extension",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
+    "url": "https://github.com/zhsama/undo-close.git"
   },
   "type": "module",
   "scripts": {
@@ -18,8 +18,8 @@
     "build:firefox": "pnpm clean:bundle && turbo ready && cross-env __FIREFOX__=true turbo build",
     "zip": "pnpm build && pnpm -F zipper zip",
     "zip:firefox": "pnpm build:firefox && cross-env __FIREFOX__=true pnpm -F zipper zip",
-    "dev": "turbo ready && cross-env __DEV__=true turbo watch dev --concurrency 20",
-    "dev:firefox": "turbo ready && cross-env __DEV__=true __FIREFOX__=true turbo watch dev --concurrency 20",
+    "dev": "turbo ready && cross-env __DEV__=true turbo run dev --concurrency 20",
+    "dev:firefox": "turbo ready && cross-env __DEV__=true __FIREFOX__=true turbo run dev --concurrency 20",
     "e2e": "pnpm build && pnpm zip && turbo e2e",
     "e2e:firefox": "pnpm build:firefox && pnpm zip:firefox && cross-env __FIREFOX__=true turbo e2e",
     "type-check": "turbo type-check",
@@ -53,6 +53,8 @@
     "eslint-plugin-react": "7.35.0",
     "eslint-plugin-react-hooks": "4.6.2",
     "husky": "^9.1.4",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
@@ -64,12 +66,21 @@
     "vite": "5.4.9"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json}": [
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,css,less,scss,md}": [
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@9.9.0",
+  "packageManager": "pnpm@9.14.0",
   "engines": {
-    "node": ">=18.19.1"
-  }
+    "node": ">=18.19.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "pages/*",
+    "scripts/*"
+  ]
 }
